@@ -1,0 +1,13 @@
+demo.html
+node_modules
+dist
+.tmp
+.idea
+.sass-cache
+bower_components
+test/bower_components
+npm-debug.log
+.*
+npm-debug.log
+!.babelrc
+!.gitignore

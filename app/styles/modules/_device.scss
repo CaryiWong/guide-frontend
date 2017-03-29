@@ -1,0 +1,151 @@
+
+@mixin android-body() {
+    $selector: #{&};
+    @at-root {
+        html.android-body {
+            #{$selector} {
+                @content
+            }
+        }
+    }
+}
+
+@mixin ios-body {
+    $selector: #{&};
+    @at-root {
+        html.ios-body {
+            #{$selector} {
+                @content
+            }
+        }
+    }
+}
+
+@mixin weixin-body {
+    $selector: #{&};
+    @at-root {
+        html.weixin-body {
+            #{$selector} {
+                @content
+            }
+        }
+    }
+}
+
+@mixin android-vunit {
+    $selector: #{&};
+    @at-root {
+        html.android-vunit {
+            #{$selector} {
+                @content
+            }
+        }
+    }
+}
+
+@mixin android-flex {
+    $selector: #{&};
+    @at-root {
+        html.android-flex {
+            #{$selector} {
+                @content
+            }
+        }
+    }
+}
+
+@function percent-device-width($num) {
+    @return $num / $origin-width * 100 + %;
+}
+
+@function font-size-rem($size) {
+    @return $size/($font-base-size*2) + rem;
+}
+
+@function rem($size) {
+    @return $size/($font-base-size) + rem;
+}
+
+@function em14($target, $size: 14) {
+    @return $target / $size + em;
+}
+
+@function em24($target, $size: 24) {
+    @return $target / $size + em;
+}
+
+@function em28($target, $size: 28) {
+    @return $target / $size + em;
+}
+
+@function em36($target, $size: 36) {
+    @return $target / $size + em;
+}
+
+@function em($target, $size) {
+    @return $target / $size + em;
+}
+
+@function width-rem($width) {
+    @return $width/($font-base-size*2) + rem;
+}
+
+@function height-rem($height) {
+    @return $height/($font-base-size*2) + rem;
+}
+
+@function percent($num) {
+    @return $num * 100;
+}
+
+@function percent-width($num) {
+    @return $num * 100 + vw;
+}
+
+@function percent-height($num) {
+    @return $num * 100 + vh;
+}
+
+@mixin property-vw($pro, $value) {
+    #{$pro}: percent-width($value/$origin-width);
+    @include android-vunit {
+        #{$pro}: width-rem($value);
+    }
+}
+
+
+@mixin width-vw($width) {
+    width: percent-width($width/$origin-width);
+    @include android-vunit {
+        width: width-rem($width);
+    }
+}
+
+@mixin height-vw($height) {
+    height: percent-width($height/$origin-width);
+    @include android-vunit {
+        height: width-rem($height);
+    }
+}
+
+@mixin height-vh($height) {
+    height: percent-height($height/$origin-height);
+    @include android-vunit {
+        height: height-rem($height);
+    }
+}
+
+@mixin min-height-vw($height) {
+    min-height: percent-width($height/$origin-width);
+    @include android-vunit {
+        min-height: width-rem($height);
+    }
+}
+
+@mixin background-device($src2, $src3) {
+    background-image: $src2;
+    background-image: -webkit-image-set(
+        $src2 2x,
+        $src3 3x
+    );
+}

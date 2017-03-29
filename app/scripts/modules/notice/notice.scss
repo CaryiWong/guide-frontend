@@ -1,0 +1,119 @@
+@import "modules/variables";
+@import "modules/device";
+@import "modules/loading";
+
+
+.notice-mask{
+    position: fixed;;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, .5);
+    animation: notice-mask-show .2s ease;
+
+    @keyframes notice-mask-show{
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    &.hiding{
+        animation-name: notice-mask-hide;
+
+        @keyframes notice-mask-hide{
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    }
+
+    &.notice-loading-mask{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .loading-text{
+            display: block;
+            color: $primary-color-orange;
+            padding-top: rem(18);
+            font-size: rem(18);
+            overflow: hidden;
+            animation: loading-text 3s infinite alternate;
+
+            @keyframes loading-text{
+                from {
+                    letter-spacing: 1px;
+                }
+                to{
+                    letter-spacing: 3px;
+                }
+            }
+        }
+
+        .loading-icon{
+            border-top-color: $primary-color-orange;
+            width: rem(48);
+            height: rem(48);
+        }
+    }
+}
+
+.notice-item{
+    position: fixed;
+    z-index: 2001;
+    text-align: center;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    background: #e9e9e9;
+    color: #fff;
+    font-size: rem(16);
+    bottom: rem(18);
+    left: 50%;
+    min-width: 30%;
+    margin: 0 auto;
+    padding: rem(10) rem(18);
+    transform: translateX(-50%);
+    animation: notice-item-show .2s ease both;
+
+    @keyframes notice-item-show{
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(50%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    &.hiding{
+        animation-name: notice-item-hide;
+
+        @keyframes notice-item-hide{
+            from {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1, 1);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(.8, .8);
+            }
+        }
+    }
+
+    &.notice-success{
+        background: #4caf50;
+    }
+
+    &.notice-error{
+        background: #f44336;
+    }
+}

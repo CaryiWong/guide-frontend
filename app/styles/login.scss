@@ -1,0 +1,69 @@
+//@import "modules/variables";
+//@import "modules/device";
+
+html, body{
+    height: 100%;
+}
+
+body{
+    //background-image: url("/images/bg.jpg");
+    background-size: cover;
+    background-color: #333;
+    background-position: center center;
+}
+
+.login-area{
+    height: 100%;
+}
+
+.login-form{
+    width: 480px;
+    margin: 0 auto;
+    margin-top: 150px;
+    float: none;
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px 76px;
+
+    .form-logo{
+        margin: 0 auto 48px auto;
+        text-align: center;
+    }
+
+    .form-group{
+        margin-bottom: 20px;
+    }
+
+    .form-control{
+        padding-left: 20px;
+        height: 45px;
+        border-color: #ccc;
+    }
+
+    .group-password{
+        margin-bottom: 8px;
+    }
+
+    .group-remeber{
+        .remeber-checkbox{
+            float: left;
+            margin: 0;
+        }
+
+        .forget-password{
+            float: right;
+            color: #999;
+        }
+    }
+
+    .group-submit{
+        margin-top: 30px;
+        margin-bottom: 0;
+
+        .submit-button{
+            background: #333;
+            color: #fff;
+            font-size: 18px;
+        }
+    }
+}

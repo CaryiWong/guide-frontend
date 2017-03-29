@@ -1,0 +1,35 @@
+@import "lib/media-queries";
+@import "modules/custom_bootstrap_variables";
+//@import "bootstrap";
+@import "bootstrap/mixins";
+@import "bootstrap/normalize";
+@import "bootstrap/scaffolding";
+@import "bootstrap/grid";
+@import "bootstrap/forms";
+@import "bootstrap/input-groups";
+@import "bootstrap/alerts";
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+@import "bootstrap/pager";
+@import "bootstrap/navbar";
+@import "bootstrap/navs";
+@import "bootstrap/buttons";
+@import "bootstrap/button-groups";
+@import "bootstrap/forms";
+@import "bootstrap/tables";
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+@import "bootstrap/component-animations";
+@import "bootstrap/dropdowns";
+@import "bootstrap/modals";
+
+html{
+  height: 100%;
+  background: url('/images/bg.jpg') no-repeat fixed bottom;
+  body{
+    background: none;
+  }
+}
+.container{
+  width: 960px\9;
+}

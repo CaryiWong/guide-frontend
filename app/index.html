@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+    <title>索引系统</title>
+    <!-- build:css /styles/vendor.css -->
+    <link rel="stylesheet" href="/styles/public.css">
+    <!-- endbuild -->
+    <!-- build:css /styles/main.css -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+       <scripts src="//cdn.bootcss.com/es5-shim/4.5.9/es5-sham.min.js"></scripts>
+       <scripts src="//cdn.bootcss.com/es5-shim/4.5.9/es5-shim.min.js"></scripts>
+       <scripts src="scripts/lib/html5shiv.min.js"></scripts>
+       <scripts src="scripts/lib/respond.min.js"></scripts>
+    <![endif]-->
+
+</head>
+<body>
+<div class="navbar navbar-static-top bs-docs-nav" id="top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="logo-brand">
+                <img src="/images/logo.png" class="head-logo" alt="">
+                <span>索引系统</span>
+            </a>
+        </div>
+        <nav id="bs-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <!--  <li>
+                   <a href="#">起步</a>
+                 </li> -->
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="container main-container">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="请输入搜索内容..." aria-describedby="basic-addon2">
+        <span class="input-group-addon">搜索</span>
+    </div>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <i class="glyphicon glyphicon-th-list"></i> 首页
+            </a>
+        </li>
+        <li><a href="#">一级目录</a></li>
+        <li><a href="#">二级目录</a></li>
+        <li class="active">详情</li>
+    </ol>
+    <div class="main-list">
+        <a href="#" class="list-item alert alert-success">
+            <p class="number">01</p>
+            <h4>一级目录</h4>
+            <p><strong>描述：</strong>一级测试目录</p>
+            <p><strong>作者：</strong>王美丽</p>
+        </a>
+
+    </div>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+            <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- build:remove  -->
+<script src="/scripts/vendor.js"></script>
+<script src="/scripts/main.bundle.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>
