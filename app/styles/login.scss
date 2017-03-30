@@ -1,21 +1,4 @@
-//@import "modules/variables";
-//@import "modules/device";
-
-html{
-    height: 100%;
-    background: url('/images/bg.jpg') no-repeat fixed bottom;
-    body{
-        background: none;
-    }
-}
-
-body{
-    //background-image: url("/images/bg.jpg");
-    background-size: cover;
-    background-color: #333;
-    background-position: center center;
-}
-
+@import "pintuer.css";
 .login-area{
     height: 100%;
 }

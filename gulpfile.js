@@ -12,14 +12,9 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackConfig = require('./webpack.config');
 const webpackConfigProduction = require('./webpack.production.config');
-const historyApiFallback = require('connect-history-api-fallback');
-
 const webpackBundler = webpack(webpackConfig);
 const $ = gulpLoadPlugins();
-
 const reload = browserSync.reload;
-
-
 
 function styles() {
 	return gulp.src('app/styles/*.scss')
@@ -47,7 +42,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('app/scripts/*.js')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.babel())
@@ -56,34 +51,34 @@ gulp.task('scripts', () => {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('webpack', function (cb) {
-    return webpack(webpackConfig, (err, stats) => {
-		if (err) {
-			throw new gutil.PluginError('webpack', err);
-		}
-		gutil.log('{webpack}', stats.toString({
-            chunks: false,
-			colors: true
-		}));
-		cb && cb();
-	});
-});
-
 gulp.task('styles:dist',  () => {
 	return styles();
 });
 
-gulp.task('webpack:dist', ['html'], function (cb) {
-    return webpack(webpackConfigProduction, (err, stats) => {
-		if (err) {
-			throw new gutil.PluginError('webpack', err);
-		}
-		gutil.log('{webpack}', stats.toString({
+gulp.task('webpack', function (cb) {
+    return webpack(webpackConfig, (err, stats) => {
+        if (err) {
+            throw new gutil.PluginError('webpack', err);
+        }
+        gutil.log('{webpack}', stats.toString({
             chunks: false,
-			colors: true
-		}));
-		cb && cb();
-	});
+            colors: true
+        }));
+        cb && cb();
+    });
+});
+
+gulp.task('webpack:dist', function (cb) {
+    return webpack(webpackConfigProduction, (err, stats) => {
+        if (err) {
+            throw new gutil.PluginError('webpack', err);
+        }
+        gutil.log('{webpack}', stats.toString({
+            chunks: false,
+            colors: true
+        }));
+        cb && cb();
+    });
 });
 
 function lint(files, options) {
@@ -99,6 +94,7 @@ gulp.task('lint', () => {
   })
     .pipe(gulp.dest('app/scripts'));
 });
+
 gulp.task('lint:test', () => {
   return lint('test/spec/**/*.js', {
     fix: true,
@@ -109,15 +105,15 @@ gulp.task('lint:test', () => {
     .pipe(gulp.dest('test/spec/**/*.js'));
 });
 
-gulp.task('html', ['styles:dist'], () => {
+gulp.task('html', ['styles:dist','scripts'], () => {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.css', $.cssnano({safe: true, autoprefixer: false})))
     // .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
 	.pipe($.if('!**/*.html', $.rev()))
 	.pipe($.revReplace())
-	.pipe($.if('**/*.html', gulp.dest('.html')))
-	.pipe($.if(['**/*', '!**/*.js', '!**/*.html'], gulp.dest('dist')));
+	.pipe($.if('**/*.html', gulp.dest('dist')))
+	.pipe($.if(['**/*', '**/*.js', '!**/*.html'], gulp.dest('dist')));
 });
 
 gulp.task('images', () => {
@@ -143,7 +139,7 @@ gulp.task('fonts', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', '.html', 'dist']));
 
-gulp.task('serve', [ 'styles', 'webpack'], () => {
+gulp.task('serve', [ 'styles'], () => {
     browserSync({
         open: false,
         port: 5888,
@@ -157,23 +153,18 @@ gulp.task('serve', [ 'styles', 'webpack'], () => {
             baseDir: ['.tmp', 'app'],
             routes: {
 		        '/node_modules': 'node_modules'
-            },
-            middleware: [
-                historyApiFallback({
-					rewrites: [
-						{from: /^\/shared/, to: '/share.html'}
-					]
-				}),
-                webpackDevMiddleware(webpackBundler, {
-                    publicPath: webpackConfig.output.publicPath,
-                    noInfo: true,
-                    stats: {
-                        colors: true
-                    }
-                }),
-                webpackHotMiddleware(webpackBundler)
-            ]
-        }
+            }
+        },
+        middleware: [
+            webpackDevMiddleware(webpackBundler, {
+                publicPath: webpackConfig.output.publicPath,
+                noInfo: true,
+                stats: {
+                    colors: true
+                }
+            }),
+            webpackHotMiddleware(webpackBundler)
+        ]
     });
 
   gulp.watch([
@@ -192,10 +183,7 @@ gulp.task('serve:dist', () => {
 		port: 9000,
 		server: {
 			baseDir: ['dist']
-		},
-		middleware: [
-			historyApiFallback({})
-		]
+		}
 	});
 });
 
@@ -217,7 +205,7 @@ gulp.task('serve:test', ['scripts'], () => {
   gulp.watch('test/spec/**/*.js', ['lint:test']);
 });
 
-gulp.task('build', ['images', 'html', 'webpack:dist'], () => {
+gulp.task('build', ['images','html'], () => {
 	console.log('all done');
 	// return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });

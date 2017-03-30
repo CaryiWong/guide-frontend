@@ -8,44 +8,27 @@ var clientServerConfig = {
     '-p': 'http://connect-boat.yi-gather.com/v1/',
     '-bd': 'http://connect-bd.rather.im/v1/'
 };
-var publicServerConfig = {
-    '-t': 'http://connect.1900lab.com/v1/',
-    '-p': 'http://connect.rather.im/v1/'
-};
 
-var passportServerConfig = {
-    '-t': 'https://test-passport.yi-gather.com/',
-    '-p': 'https://passport.yi-gather.com/'
-};
 
-var publicServerUrl = publicServerConfig[clientServerParams] || publicServerConfig['-p'];
 var clientServerUrl = clientServerConfig[clientServerParams] || clientServerConfig['-p'];
-var passportServerUrl = passportServerConfig[clientServerParams] || passportServerConfig['-p'];
 
 var path = require('path');
-var stylesPath = [
-    path.resolve('app/styles'),
-    path.resolve('node_modules')
-];
 
 module.exports = {
     context: __dirname + '/app/scripts/',
     devtool: false,
     entry: {
-        'app': [
-            './app.js'
+        'main': [
+            './main.js'
         ],
         'login': [
             './login.js'
         ],
-        'share': [
-            './share.js'
-        ],
         'vendor': [
+            'es5-shim',
+            'es5-shim/es5-sham',
             'jquery',
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/transition',
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/dropdown',
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/modal'
+            'imports?$=jquery!./lib/pintuer'
         ]
     },
     output: {
@@ -61,6 +44,11 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
+                plugins: [
+                    "transform-es3-property-literals",
+                    "transform-es3-member-expression-literals",
+                    "transform-es2015-modules-simple-commonjs"
+                ],
                 loader: 'babel?presets[]=stage-0&plugins[]=transform-runtime'
             },
             {
@@ -83,6 +71,12 @@ module.exports = {
                 test: /.(woff|eot|ttf|svg)(\?\-?[a-z0-9=\.]+)?$/,
                 loader: 'url-loader?limit=10000'
             }
+        ],
+        postLoaders: [
+            {
+                test: /\.js$/,
+                loaders: ['es3ify-loader']
+            }
         ]
     },
     vue: {
@@ -92,15 +86,10 @@ module.exports = {
             js: 'babel?presets[]=stage-0&plugins[]=transform-runtime'
         }
     },
-    sassLoader: {
-        includePaths: stylesPath
-    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"',
             'process.env.REQUEST_URL': JSON.stringify(clientServerUrl),
-            'process.env.PUBLIC_URL': JSON.stringify(publicServerUrl),
-            'process.env.PASSPORT_URL': JSON.stringify(passportServerUrl)
         }),
         new webpack.ProvidePlugin({
             'Promise': 'exports?global.Promise!es6-promise',
@@ -123,18 +112,13 @@ module.exports = {
         // html plugin should auto
         new HtmlWebpackPlugin({
             filename: path.resolve('dist', 'index.html'),
-            chunks: ['vendor', 'app'],
+            chunks: ['polyfill','vendor', 'main'],
             template: path.resolve('.html', 'index.html')
         }),
         new HtmlWebpackPlugin({
             filename: path.resolve('dist', 'login.html'),
-            chunks: ['login'],
+            chunks: ['polyfill','vendor','login'],
             template: path.resolve('.html', 'login.html')
-        }),
-        new HtmlWebpackPlugin({
-            filename: path.resolve('dist', 'share.html'),
-            chunks: ['share'],
-            template: path.resolve('.html', 'share.html')
         })
     ],
     resolve: {

@@ -23,21 +23,22 @@ module.exports = {
     devtool: 'eval',
     entry: {
         main: [
+            'eventsource-polyfill',
             'webpack/hot/dev-server',
             'webpack-hot-middleware/client?noInfo=true&reload=true',
             './main.js'
         ],
         login: [
+            'eventsource-polyfill',
             'webpack/hot/dev-server',
             'webpack-hot-middleware/client?noInfo=true&reload=true',
             './login.js'
         ],
         vendor: [
-            'babel-polyfill',
+            'es5-shim',
+            'es5-shim/es5-sham',
             'jquery',
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/transition',
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/dropdown',           
-            'imports?jQuery=jquery!bootstrap-sass/assets/javascripts/bootstrap/modal'
+            'imports?$=jquery!./lib/pintuer'
         ]
     },
     output: {
@@ -53,14 +54,12 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                //loader:{
-                //    "presets": ["es2015", "stage-0"],
-                //    "plugins" : [
-                //        "transform-es3-property-literals",
-                //        "transform-es3-member-expression-literals",
-                //    ]
-                //}
-                loader: 'es3ify-loader!babel?presets[]=stage-0&plugins[]=transform-runtime'
+                plugins: [
+                    "transform-es3-property-literals",
+                    "transform-es3-member-expression-literals",
+                    "transform-es2015-modules-simple-commonjs"
+                ],
+                loader: 'babel?presets[]=stage-0&plugins[]=transform-runtime'
             },
             {
                 test: /\.vue$/,
@@ -87,15 +86,18 @@ module.exports = {
                 test: /.(woff|eot|ttf|svg)(\?\-?[a-z0-9=\.]+)?$/,
                 loader: 'url-loader?limit=10000'
             }
+        ],
+        postLoaders: [
+            {
+                test: /\.js$/,
+                loaders: ['es3ify-loader']
+            }
         ]
     },
-    vue: {
-        loaders: {
-            css: 'style!css!sass',
-            scss: 'style!css!sass',
-            // scss: ExtractTextPlugin.extract('style', 'css!sass'),
-            js: 'babel?presets[]=stage-0&plugins[]=transform-runtime'
-        }
+    devServer: {
+        hot: true,
+        inline: true,
+        contentBase: '/.tmp/scripts'
     },
     sassLoader: {
         includePaths: stylesPath
@@ -104,10 +106,12 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
         }),
+        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             'Promise': 'exports?global.Promise!es6-promise',
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+            'fetch': 'imports?this=>global!exports?global.fetch!fetch-ie8',
             'device': 'modules/device'
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -126,6 +130,6 @@ module.exports = {
             styles: path.resolve('app', 'styles'),
         },
         modulesDirectories: [__dirname + '/node_modules'],
-        extensions: ['', '.js', '.scss', '.vue']
+        extensions: ['', '.js', '.scss']
     }
 }
