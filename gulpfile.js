@@ -1,5 +1,5 @@
 // generated on 2016-08-18 using generator-webapp 2.1.0
-const polyfill = require('babel-polyfill');
+// const polyfill = require('babel-polyfill');
 const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');

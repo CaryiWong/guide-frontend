@@ -20,7 +20,7 @@ if (!(Object.setPrototypeOf || testObject.__proto__)) {
 }
 
 var $btn = $('.submit-button');
-$btn.on('click',function(e){
-    e.preventDefault();
+$btn.on('click',function(){
     console.log( 'click')
+    alert('click')
 });
