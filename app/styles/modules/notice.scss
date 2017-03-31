@@ -1,6 +1,6 @@
-@import "modules/variables";
-@import "modules/device";
-@import "modules/loading";
+@import "./variables";
+@import "./device";
+@import "./loading";
 
 
 .notice-mask{
@@ -43,7 +43,7 @@
 
         .loading-text{
             display: block;
-            color: $primary-color-orange;
+            color: #0ab;
             padding-top: rem(18);
             font-size: rem(18);
             overflow: hidden;
@@ -60,7 +60,7 @@
         }
 
         .loading-icon{
-            border-top-color: $primary-color-orange;
+            border-top-color: #0ab;
             width: rem(48);
             height: rem(48);
         }

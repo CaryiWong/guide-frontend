@@ -7,12 +7,12 @@
     <meta name="renderer" content="webkit">
 
     <title>索引系统</title>
-    <!-- build:css /styles/vendor.css -->
+    <!-- build:css styles/vendor.css -->
     <link rel="stylesheet" href="styles/pintuer.css">
     <link rel="stylesheet" href="styles/public.css">
     <!-- endbuild -->
-    <!-- build:css /styles/main.css -->
-    <link rel="stylesheet" href="/styles/main.css">
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <!--[if lte IE 9]>
        <scripts src="scripts/lib/respond.min.js"></scripts>
@@ -25,14 +25,8 @@
     <div class="container">
 
         <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a href="/" class="logo-brand">
-                <img src="/images/logo.png" class="head-logo" alt="">
+                <img src="images/logo.png" class="head-logo" alt="">
                 <span>索引系统</span>
             </a>
         </div>
@@ -46,6 +40,17 @@
     </div>
 </div>
 <div class="container main-container">
+    <div class="form-group">
+        <div class="field">
+            <div class="input-group">
+                <input type="text" class="input" name="keywords" size="50" placeholder="请输入搜索关键词" />
+				<span class="addbtn">
+            <button type="button" class="button">
+                搜索</button></span>
+            </div>
+        </div>
+    </div>
+
     <div class="tab">
         <div class="tab-head">
             <strong>标题</strong> <span class="tab-more"><a href="#">更多</a></span>
@@ -55,28 +60,37 @@
                 <li><a href="#tab-units">3</a> </li>
             </ul>
         </div>
+        <div class="tab-body">
+            <div class="tab-panel active" id="tab-start">
+                11</div>
+            <div class="tab-panel" id="tab-css">
+                22</div>
+            <div class="tab-panel" id="tab-units">
+                33</div>
+        </div>
     </div>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="请输入搜索内容..." aria-describedby="basic-addon2">
-        <span class="input-group-addon">搜索</span>
-    </div>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#">
-                <i class="glyphicon glyphicon-th-list"></i> 首页
-            </a>
-        </li>
-        <li><a href="#">一级目录</a></li>
-        <li><a href="#">二级目录</a></li>
-        <li class="active">详情</li>
-    </ol>
+
     <div class="main-list">
-        <a href="#" class="list-item alert alert-success">
-            <p class="number">01</p>
-            <h4>一级目录</h4>
-            <p><strong>描述：</strong>一级测试目录</p>
-            <p><strong>作者：</strong>王美丽</p>
-        </a>
+        <ul class="nav nav-menu nav-inline nav-navicon">
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-th-list"></i> 首页 /
+                </a>
+            </li>
+            <li><a href="#">一级目录 /</a></li>
+            <li><a href="#">二级目录 /</a></li>
+            <li><a href="#">详情</a></li>
+        </ul>
+
+        <div class="item-list">
+            <a href="#" class="list-item alert alert-success">
+                <p class="number">01</p>
+                <h4>一级目录</h4>
+                <p><strong>描述：</strong>一级测试目录</p>
+                <p><strong>作者：</strong>王美丽</p>
+            </a>
+        </div>
+
 
     </div>
     <nav aria-label="...">
@@ -86,13 +100,14 @@
         </ul>
     </nav>
 </div>
-<!-- build:js /scripts/vendor.js  -->
+
+<!-- build:js scripts/vendor.js  -->
 <script src="scripts/lib/jquery.js"></script>
 <script src="scripts/lib/pintuer.js"></script>
 <!-- endbuild -->
 
-<!-- build:js /scripts/main.js -->
-<script src="/scripts/main.bundle.js"></script>
+<!-- build:js scripts/main.js -->
+<script src="scripts/main.js"></script>
 <!-- endbuild -->
 
 </body>

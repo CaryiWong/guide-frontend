@@ -7,17 +7,17 @@ const del = require('del');
 const wiredep = require('wiredep').stream;
 const gutil = require('gulp-util');
 const assetsFunctions = require('node-sass-asset-functions');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackConfig = require('./webpack.config');
-const webpackConfigProduction = require('./webpack.production.config');
-const webpackBundler = webpack(webpackConfig);
+//const webpack = require('webpack');
+//const webpackDevMiddleware = require('webpack-dev-middleware');
+//const webpackHotMiddleware = require('webpack-hot-middleware');
+//const webpackConfig = require('./webpack.config');
+//const webpackConfigProduction = require('./webpack.production.config');
+//const webpackBundler = webpack(webpackConfig);
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 function styles() {
-	return gulp.src('app/styles/*.scss')
+	return gulp.src('app/styles/scss/*.scss')
       .pipe($.plumber())
       .pipe($.sourcemaps.init())
       .pipe($.sass.sync({
@@ -33,7 +33,7 @@ function styles() {
       }).on('error', $.sass.logError))
       .pipe($.autoprefixer({browsers: ['last 3 version', 'Android 4']}))
       .pipe($.sourcemaps.write())
-      .pipe(gulp.dest('.tmp/styles'))
+      .pipe(gulp.dest('app/styles'))
       .pipe(reload({stream: true}));
 }
 
@@ -68,7 +68,7 @@ gulp.task('webpack', function (cb) {
     });
 });
 
-gulp.task('webpack:dist', function (cb) {
+gulp.task('webpack:dist',['html'], function (cb) {
     return webpack(webpackConfigProduction, (err, stats) => {
         if (err) {
             throw new gutil.PluginError('webpack', err);
@@ -105,7 +105,7 @@ gulp.task('lint:test', () => {
     .pipe(gulp.dest('test/spec/**/*.js'));
 });
 
-gulp.task('html', ['styles:dist','scripts'], () => {
+gulp.task('html', ['styles:dist','scripts','copy-js'], () => {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.css', $.cssnano({safe: true, autoprefixer: false})))
@@ -114,6 +114,11 @@ gulp.task('html', ['styles:dist','scripts'], () => {
 	.pipe($.revReplace())
 	.pipe($.if('**/*.html', gulp.dest('dist')))
 	.pipe($.if(['**/*', '**/*.js', '!**/*.html'], gulp.dest('dist')));
+});
+
+gulp.task('copy-js', () => {
+    return gulp.src('app/scripts/lib/*.js')
+        .pipe(gulp.dest('dist/scripts/lib'));
 });
 
 gulp.task('images', () => {
@@ -155,25 +160,26 @@ gulp.task('serve', [ 'styles'], () => {
 		        '/node_modules': 'node_modules'
             }
         },
-        middleware: [
-            webpackDevMiddleware(webpackBundler, {
-                publicPath: webpackConfig.output.publicPath,
-                noInfo: true,
-                stats: {
-                    colors: true
-                }
-            }),
-            webpackHotMiddleware(webpackBundler)
-        ]
+        //middleware: [
+        //    webpackDevMiddleware(webpackBundler, {
+        //        publicPath: webpackConfig.output.publicPath,
+        //        noInfo: true,
+        //        stats: {
+        //            colors: true
+        //        }
+        //    }),
+        //    webpackHotMiddleware(webpackBundler)
+        //]
     });
 
   gulp.watch([
     'app/*.html',
     'app/images/**/*',
+    'app/styles/**/*',
     '.tmp/fonts/**/*'
   ]).on('change', reload);
 
-  gulp.watch('app/styles/**/*.scss', ['styles']);
+  gulp.watch('app/styles/scss/**/*.scss', ['styles']);
   gulp.watch('app/fonts/**/*', ['fonts']);
 });
 

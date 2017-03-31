@@ -18,17 +18,17 @@ module.exports = {
     context: __dirname + '/app/scripts/',
     devtool: false,
     entry: {
+        'vendor': [
+            'es5-shim',
+            'es5-shim/es5-sham',
+            './lib/jquery',
+            'imports?$=./lib/jquery!./lib/pintuer'
+        ],
         'main': [
             './main.js'
         ],
         'login': [
             './login.js'
-        ],
-        'vendor': [
-            'es5-shim',
-            'es5-shim/es5-sham',
-            'jquery',
-            'imports?$=jquery!./lib/pintuer'
         ]
     },
     output: {
@@ -93,7 +93,7 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             'Promise': 'exports?global.Promise!es6-promise',
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+            'fetch': 'imports?this=>global!exports?global.fetch!ie8-fetch',
             'device': 'modules/device'
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -112,12 +112,12 @@ module.exports = {
         // html plugin should auto
         new HtmlWebpackPlugin({
             filename: path.resolve('dist', 'index.html'),
-            chunks: ['polyfill','vendor', 'main'],
+            chunks: ['main','vendor'],
             template: path.resolve('.html', 'index.html')
         }),
         new HtmlWebpackPlugin({
             filename: path.resolve('dist', 'login.html'),
-            chunks: ['polyfill','vendor','login'],
+            chunks: ['login','vendor'],
             template: path.resolve('.html', 'login.html')
         })
     ],

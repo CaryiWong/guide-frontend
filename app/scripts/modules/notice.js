@@ -1,9 +1,7 @@
-import "./notice.scss";
-
 var body = document.body;
 var global_mask;
 
-export default {
+var notice ={
     create_mask() {
         var dom = document.createElement('div');
         dom.classList.add('notice-mask');
@@ -45,4 +43,4 @@ export default {
     push_error(text) {
         this.push(text, 'notice-error');
     }
-}
+};
