@@ -1,72 +1,99 @@
 /**
  * Created by Caryi on 2016/3/18.
  */
-import $ from 'jquery';
-import compressImg from '../lib/image.compress';
-export const root = (process.env.NODE_ENV === 'development' ? 'http://test-group.yi-gather.com/api/' :
-'http://' + window.location.hostname + '/api/');
-var imgUrl = 'http://www.yi-gather.com/cms/tools/file_upload.cms';
-export function server(obj) {
+var server_root = (/localhost/.test( window.location.host ) ? 'http://120.25.244.174:8880/in_guide/' :
+'http://' + window.location.hostname + '/in_guide/');
+console.log(server_root);
+
+function server(url,data,config) {
+    config = config || {};
     var dtd = $.Deferred();
-    var url = obj.url;
     if (!/http/.test(url)) {
-        url = root + url;
+        url = server_root + url;
+    }
+    function finish() {
+        if(config.loading){
+            clearTimeout(loading_timer);
+            notice.hide_loading();
+        }
+    }
+
+    var loading_timer;
+    if(config.loading){
+        loading_timer = setTimeout(function () {
+            notice.show_loading();
+        }, 500);
     }
     $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
+        //xhrFields: {
+        //    withCredentials: true
+        //},
         url: url,
         method: 'post',
         dataType: 'json',
-        data: obj.data,
-        crossDomain: true,
+        data: data,
+        //crossDomain: true
     }).success(function (response) {
-        if (response.errcode === 0) {
-            dtd.resolve(response);
+        finish();
+        if (response.errcode === "10000") {
+            dtd.resolve(response.data);
         } else {
-            dtd.reject(response.errormsg || response.errmsg);
+            var errmsg = response.msg || '请求失败!';
+            var error = config.error;
+            error && notice.push_error(
+                typeof error === 'string' ? error : errmsg);
+            dtd.reject(errmsg);
         }
     }).fail(function (err) {
-        dtd.reject(err.errormsg || err.errmsg);
+        var errmsg = err.msg || '请求失败!';
+        var error = config.error;
+        error && notice.push_error(
+            typeof error === 'string' ? error : errmsg);
+        finish();
+        dtd.reject(errmsg);
     });
-
     return dtd.promise();
 }
 
-export function uploadImg(file) {
+function uploadFile(url,file,config) {
+    config = config || {};
     var dtd = $.Deferred();
-    var url = imgUrl;
+    function finish() {
+        if(config.loading){
+            clearTimeout(loading_timer);
+            notice.hide_loading();
+        }
+    }
+    var loading_timer;
+    if(config.loading){
+        loading_timer = setTimeout(function () {
+            notice.show_loading();
+        }, 500);
+    }
     if (file) {
         if (typeof FormData === "undefined") {
             throw new Error("FormData is not implemented");
         }
         var request = new XMLHttpRequest();
-        request.open('POST', url);
+        request.open('POST', server_root + url);
         request.onreadystatechange = function () {
             if (request.readyState === 4 && request.status === 200 && request.responseText !== '') {
                 var data = JSON.parse(request.responseText).data;
+                finish();
                 dtd.resolve(data);
             } else if (request.status !== 200 && request.responseText) {
-                var error = JSON.parse(request.responseText);
-                dtd.reject(error)
+                var errmsg = JSON.parse(request.responseText) || '请求失败!';
+                var error = config.error;
+                error && notice.push_error(
+                    typeof error === 'string' ? error : errmsg);
+                finish();
+                dtd.reject(errmsg)
             }
         };
         var formdata = new FormData();
-        if (typeof (file) === 'object') {
-            formdata.append('file', file);
-            request.send(formdata);
-        } else {
-            compressImg(file, 960, function (src) {
-                formdata.append('img', src);
-                request.send(formdata);
-            });
-        }
+        formdata.append('file', file);
+        request.send(formdata);
         return dtd.promise();
     }
 }
-
-
-//注册http://192.168.1.3:8080/community/user/create_user.shtml?username=caryi&nickname=caryinick
-// &password=e10adc3949ba59abbe56e057f20f883e&telnum=12345678910
 

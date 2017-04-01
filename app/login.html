@@ -6,7 +6,6 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="renderer" content="webkit">
       <title>索引系统</title>
-
     <!-- build:css styles/vendor.css -->
       <link rel="stylesheet" href="styles/pintuer.css">
       <link rel="stylesheet" href="styles/public.css">
@@ -17,13 +16,11 @@
       <!--[if lte IE 9]>
       <scripts src="scripts/lib/respond.min.js"></scripts>
       <![endif]-->
-      <!--<scripts src="//cdn.bootcss.com/es5-shim/4.5.9/es5-sham.min.js"></scripts>-->
-      <!--<scripts src="//cdn.bootcss.com/es5-shim/4.5.9/es5-shim.min.js"></scripts>-->
-      <!--<scripts src="scripts/lib/html5shiv.min.js"></scripts>-->
+
   </head>
   <body>
         <div class="container login-area">
-            <form class="login-form">
+            <div class="login-form">
                 <h2 class="form-title">索引系统</h2>
                 <div class="form-group">
                     <div class="label">
@@ -31,7 +28,8 @@
                             账号</label>
                     </div>
                     <div class="field">
-                        <input type="text" class="input" id="username" name="username" size="30" placeholder="手机/邮箱/账号" />
+                        <input type="text" class="input" id="username" value="test"
+                               name="username" size="30" placeholder="输入账户" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -40,19 +38,22 @@
                             密码</label>
                     </div>
                     <div class="field">
-                        <input type="password" class="input" id="userpwd" name="userpwd" size="30" placeholder="请输入密码" />
+                        <input type="password" class="input" id="userpwd" value="123456"
+                               name="userpwd" size="30" placeholder="请输入密码" />
                     </div>
                 </div>
                 <div class="form-button">
-                    <span class="button bg-main submit-button"> 登录</span>
+                    <button class="button bg-main submit-button"> 登录</button>
                 </div>
-            </form>
+            </div>
         </div>
 
         <!-- build:js scripts/vendor.js  -->
         <script src="scripts/lib/jquery.js"></script>
+        <script src="scripts/lib/js-cookie.js"></script>
         <script src="scripts/lib/pintuer.js"></script>
         <script src="scripts/modules/notice.js"></script>
+        <script src="scripts/modules/server.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/login.js -->

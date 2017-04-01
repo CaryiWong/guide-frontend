@@ -20,27 +20,22 @@
 
 </head>
 <body>
-<div class="navbar navbar-static-top bs-docs-nav" id="top">
-
+<div class="navbar">
     <div class="container">
-
         <div class="navbar-header">
             <a href="/" class="logo-brand">
                 <img src="images/logo.png" class="head-logo" alt="">
                 <span>索引系统</span>
             </a>
+            <div class="user-block">
+                <span class="username"></span>&nbsp;&nbsp;
+                <span class="logout-btn"> |&nbsp;&nbsp;退出</span>
+            </div>
         </div>
-        <nav id="bs-navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <!--  <li>
-                   <a href="#">起步</a>
-                 </li> -->
-            </ul>
-        </nav>
     </div>
 </div>
 <div class="container main-container">
-    <div class="form-group">
+    <div class="form-group search-group">
         <div class="field">
             <div class="input-group">
                 <input type="text" class="input" name="keywords" size="50" placeholder="请输入搜索关键词" />
@@ -51,62 +46,42 @@
         </div>
     </div>
 
-    <div class="tab">
-        <div class="tab-head">
-            <strong>标题</strong> <span class="tab-more"><a href="#">更多</a></span>
-            <ul class="tab-nav">
-                <li class="active"><a href="#tab-start">1</a> </li>
-                <li><a href="#tab-css">2</a> </li>
-                <li><a href="#tab-units">3</a> </li>
-            </ul>
-        </div>
-        <div class="tab-body">
-            <div class="tab-panel active" id="tab-start">
-                11</div>
-            <div class="tab-panel" id="tab-css">
-                22</div>
-            <div class="tab-panel" id="tab-units">
-                33</div>
-        </div>
-    </div>
-
     <div class="main-list">
-        <ul class="nav nav-menu nav-inline nav-navicon">
+        <ul class="nav nav-menu nav-inline nav-navicon bg border-main">
             <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-th-list"></i> 首页 /
-                </a>
+                <a href="index.html"><i class="icon-home"></i> 首页 | </a>
             </li>
-            <li><a href="#">一级目录 /</a></li>
-            <li><a href="#">二级目录 /</a></li>
-            <li><a href="#">详情</a></li>
+            <li><a href="#" class="pre-level">上一级</a></li>
+            <!--<li><a href="#" class="next-level">下一级</a></li>-->
+            <!--<li><span>详情</span></li>-->
         </ul>
 
         <div class="item-list">
-            <a href="#" class="list-item alert alert-success">
-                <p class="number">01</p>
-                <h4>一级目录</h4>
-                <p><strong>描述：</strong>一级测试目录</p>
-                <p><strong>作者：</strong>王美丽</p>
-            </a>
+            <!--<a href="#" class="list-item alert bg-green-light border-green">-->
+                <!--<h2 class="number"><i class="icon-book"></i> 01</h2>-->
+                <!--<h2 class="text-more number">一级目录</h2>-->
+                <!--<p class="text-more"><strong>描述：</strong>一级测试目录一级测试目录一级测试目录一级测试目录一级测试目录</p>-->
+                <!--<p class="text-more"><strong>作者：</strong>王美丽</p>-->
+            <!--</a>-->
         </div>
-
-
     </div>
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-            <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
-        </ul>
-    </nav>
+    <!--<ul class="pagination pagination-group">-->
+        <!--<li><a href="#">«</a> </li>-->
+        <!--<li><a href="#">1</a> </li>-->
+        <!--<li><a href="#">»</a> </li>-->
+    <!--</ul>-->
 </div>
 
 <!-- build:js scripts/vendor.js  -->
 <script src="scripts/lib/jquery.js"></script>
+<script src="scripts/lib/js-cookie.js"></script>
 <script src="scripts/lib/pintuer.js"></script>
+<script src="scripts/modules/notice.js"></script>
+<script src="scripts/modules/server.js"></script>
 <!-- endbuild -->
 
 <!-- build:js scripts/main.js -->
+<script src="scripts/modules/getArgs.js"></script>
 <script src="scripts/main.js"></script>
 <!-- endbuild -->
 

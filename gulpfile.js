@@ -147,15 +147,15 @@ gulp.task('clean', del.bind(null, ['.tmp', '.html', 'dist']));
 gulp.task('serve', [ 'styles'], () => {
     browserSync({
         open: false,
-        port: 5888,
+        port: 6888,
         ui: {
-            port: 5899,
+            port: 6899,
             weinre: {
-                port: 5877
+                port: 6877
             }
         },
         server: {
-            baseDir: ['.tmp', 'app'],
+            baseDir: ['.tmp','app'],
             routes: {
 		        '/node_modules': 'node_modules'
             }
@@ -173,10 +173,10 @@ gulp.task('serve', [ 'styles'], () => {
     });
 
   gulp.watch([
-    'app/*.html',
-    'app/images/**/*',
-    'app/styles/**/*',
-    '.tmp/fonts/**/*'
+      'app/*.html',
+      'app/images/**/*',
+      'app/scripts/**/*',
+      'app/styles/**/*',
   ]).on('change', reload);
 
   gulp.watch('app/styles/scss/**/*.scss', ['styles']);

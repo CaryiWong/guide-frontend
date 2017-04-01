@@ -1,9 +1,68 @@
-@import "../lib/media-queries";
-@import "../modules/notice";
+@import "lib/media-queries";
+@import "modules/notice";
 html{
   height: 100%;
-  background: url('/images/bg.jpg') no-repeat fixed bottom;
+  background: url('../images/bg.jpg') no-repeat fixed bottom;
   body{
     background: none;
+    font-family: '微软雅黑';
   }
+}
+p{
+  margin-bottom: 5px;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.navbar{
+  background: #333;
+  color: #fff;
+  a, a:hover, a:active {
+    color: #fff
+  }
+}
+.navbar-header {
+  line-height: 60px;
+  height: 60px;
+  .logo-brand {
+    display: inline-block;
+    font-size: 20px;
+  }
+  .head-logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+  }
+  .user-block {
+    float: right;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .logout-btn{
+    cursor: pointer;
+  }
+}
+.container {
+  max-width: 960px \0;
+}
+.nav-inline{
+  padding: 10px !important;
+  margin-bottom: 20px !important;
+
+  //background: ;
+  li{
+    a{
+      padding: 0 !important;
+    }
+    &.active{
+      a{
+        color: #0a8;
+      }
+    }
+  }
+}
+.pagination{
+  margin-top: 40px !important;
 }
